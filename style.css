@@ -1,0 +1,35 @@
+body {
+    margin: 0;
+}
+
+canvas {
+    width: 100%;
+    outline: 5px dashed black;
+}
+
+section {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+section input {
+    flex-grow: 1;
+}
+
+input#eraser {
+    appearance: none;
+    background-color: gray;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+input#eraser::after {
+    content: 'paint';
+}
+
+input#eraser:checked::after {
+    content: 'eraser';
+}
