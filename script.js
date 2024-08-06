@@ -12,19 +12,24 @@ function clearCanvas() {
     context.clearRect(0,0, canvas.width, canvas.height)
 }
 
-canvas.addEventListener("mousedown", (event) => {
+function startClicking(event) {
     clicking = true;
-});
+}
+
+canvas.addEventListener("touchstart", startClicking);
+canvas.addEventListener("mousedown", startClicking);
 
 function endClicking() {
     lastPos = null
     clicking = false;
 }
 
+canvas.addEventListener("touchcancel", endClicking);
+canvas.addEventListener("touchend", endClicking);
 canvas.addEventListener("mouseout", endClicking);
 canvas.addEventListener("mouseup", endClicking);
 
-canvas.addEventListener("mousemove", (event) => {
+function painting(event) {
     if (clicking == false) return;
     const x = (event.offsetX / canvas.offsetWidth) * canvas.width;
     const y = (event.offsetY / canvas.offsetHeight) * canvas.height;
@@ -75,4 +80,12 @@ canvas.addEventListener("mousemove", (event) => {
     }
 
     lastPos = { y: y, x: x }
+}
+
+canvas.addEventListener("touchmove", (event) => {
+    console.log(event)
+    for (const touch of event.touches) {
+        console.log("touch", touch)
+    }
 });
+canvas.addEventListener("mousemove", painting);
