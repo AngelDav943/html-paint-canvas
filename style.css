@@ -1,35 +1,74 @@
 body {
     margin: 0;
+    overscroll-behavior: contain;
+
+    background: linear-gradient(rgb(30, 36, 46), rgb(115, 129, 150));
+    background-attachment: fixed;
+
+    color: white;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100svh;
+}
+
+main {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
 }
 
 canvas {
+    box-sizing: border-box;
+    margin: 10px;
+    background-color: white;
+    max-width: 150vh;
     width: 100%;
-    outline: 5px dashed black;
 }
 
-section {
-    width: 100%;
+aside {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+
     display: flex;
-    justify-content: space-around;
+    flex-wrap: wrap;
+    flex-direction: row;
 }
 
-section input {
+aside input {
+    flex-basis: 200px;
     flex-grow: 1;
 }
 
-input#eraser {
+input#eraser, input[type="button"] {
     appearance: none;
-    background-color: gray;
+    border: none;
+    outline: none;
+    margin: 1px;
+    padding: 10px;
+    background-color: #0084ff;
     color: white;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+input#eraser:hover, input[type="button"]:hover {
+    background-color: #0059ff;
+}
+
 input#eraser::after {
-    content: 'paint';
+    content: 'Paint mode';
 }
 
 input#eraser:checked::after {
-    content: 'eraser';
+    content: 'Eraser mode';
 }
