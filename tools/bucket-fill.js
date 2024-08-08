@@ -1,6 +1,11 @@
 var timeout_id;
 
 function flood_fill(the_canvas, the_canvas_context, x, y, color, original_color, pixels, pixel_stack) {
+    if (timeout_id >= 110) {
+        clearTimeout(timeout_id)
+        return;
+    }
+
     original_color = typeof (original_color) === 'undefined' ? null : original_color;
     pixels = typeof (pixels) === 'undefined' ? null : pixels;
     pixel_stack = typeof (pixel_stack) === 'undefined' ? null : pixel_stack;

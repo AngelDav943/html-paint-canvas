@@ -48,7 +48,7 @@ aside input {
     flex-grow: 1;
 }
 
-input#eraser, input[type="button"] {
+input[type="button"] {
     appearance: none;
     border: none;
     outline: none;
@@ -61,14 +61,6 @@ input#eraser, input[type="button"] {
     align-items: center;
 }
 
-input#eraser:hover, input[type="button"]:hover {
+input[type="button"]:hover {
     background-color: #0059ff;
-}
-
-input#eraser::after {
-    content: 'Paint mode';
-}
-
-input#eraser:checked::after {
-    content: 'Eraser mode';
 }
