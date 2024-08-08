@@ -14,7 +14,12 @@
         <canvas id="drawing" height="200" width="450"></canvas>
         <aside>
             <input type="button" value="Clear" onclick="clearCanvas()">
-            <input type="checkbox" id="eraser">
+            <select id="mode">
+                <option value="brush">Brush</option>
+                <option value="eraser">Eraser</option>
+                <option value="bucket">Bucket</option>
+            </select>
+            <!-- <input type="checkbox" id="eraser"> -->
             <label>
                 Brush size
                 <input type="range" min="1" max="15" id="radius">
@@ -22,6 +27,7 @@
             <input type="color"  id="fillColor">
         </aside>
     </main>
+    <script src="./tools/bucket-fill.js"></script>
     <script src="./script.js"></script>
 </body>
 </html>

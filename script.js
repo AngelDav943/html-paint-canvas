@@ -5,6 +5,8 @@ const radiusInput = document.getElementById("radius")
 const eraserInput = document.getElementById("eraser")
 const colorInput = document.getElementById("fillColor")
 
+const toolInput = document.getElementById("mode")
+
 let clicking = false;
 
 let lastPos = null;
@@ -46,23 +48,25 @@ function clearCanvas() {
 function painting(event, isTouch) {
     if (clicking == false) return;
 
+    if (toolInput.value != "brush" && toolInput.value != "eraser") return;
+
     let identifier = -1
     if (event.identifier != undefined) {
         isTouch = true;
         identifier = event.identifier
     }
-    
+
     let force = 1
     if (event.force != undefined) force = event.force
-    
+
     const x = (event.offsetX / canvas.offsetWidth) * canvas.width;
     const y = (event.offsetY / canvas.offsetHeight) * canvas.height;
-    
+
     const radius = radiusInput.value * force
-    const erasing = eraserInput.checked
-    
+    const erasing = toolInput.value == "eraser"
+
     context.fillStyle = colorInput.value;
-    
+
     function setLastPosition() {
         if (isTouch == true) {
             lastTouches[identifier] = { y: y, x: x }
@@ -70,14 +74,14 @@ function painting(event, isTouch) {
             lastPos = { y: y, x: x }
         }
     }
-    
+
     let currentLast = undefined
     if (isTouch == true) {
         currentLast = lastTouches[identifier]
     } else {
         currentLast = lastPos
     }
-    
+
     if (erasing) {
         context.clearRect(
             x - (radius), y - (radius),
@@ -97,14 +101,16 @@ function painting(event, isTouch) {
         setLastPosition()
         return
     }
-    
+
     const diffX = x - currentLast.x
     const diffY = y - currentLast.y
 
-    //const distance = Math.sqrt(diffX * diffX + diffY * diffY)
-    for (let t = 0; t < 100; t++) {
-        const time = t / 100
-        
+    const distance = Math.sqrt(diffX * diffX + diffY * diffY)
+    const steps = Math.floor(distance * 5)
+    console.log("steps:", steps)
+    for (let t = 0; t < steps; t++) {
+        const time = t / steps
+
         drawPoint(
             (1 - time) * currentLast.x + (time * x),
             (1 - time) * currentLast.y + (time * y)
@@ -115,6 +121,14 @@ function painting(event, isTouch) {
 }
 
 function startClicking(event) {
+
+    if (toolInput.value == "bucket") {
+        const x = Math.floor((event.offsetX / canvas.offsetWidth) * canvas.width);
+        const y = Math.floor((event.offsetY / canvas.offsetHeight) * canvas.height);
+        flood_fill(canvas, context, x, y, color_to_rgba(colorInput.value))
+        return;
+    }
+
     clicking = true;
     painting(event)
 }
@@ -138,8 +152,8 @@ function endTouch(event) {
         endClicking();
     }
 }
-canvas.addEventListener("touchend", endTouch );
-canvas.addEventListener("touchcancel", endTouch );
+canvas.addEventListener("touchend", endTouch);
+canvas.addEventListener("touchcancel", endTouch);
 
 canvas.addEventListener("mouseout", endClicking);
 canvas.addEventListener("mouseup", endClicking);
