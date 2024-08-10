@@ -29,6 +29,7 @@ canvas {
     background-color: white;
     max-width: 150vh;
     width: 100%;
+    image-rendering: pixelated;
 }
 
 aside {
